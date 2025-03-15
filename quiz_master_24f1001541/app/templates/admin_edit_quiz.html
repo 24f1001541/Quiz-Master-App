@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Quiz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Edit Quiz</h1>
+
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        
+        <a href="{{ url_for('main.admin_quizzes', chapter_id=quiz.chapter_id) }}" class="btn btn-secondary mb-4">Back to Quizzes</a>
+
+        
+        <form method="POST">
+            <div class="form-group mb-3">
+                <label for="date_of_quiz">Date</label>
+                <input type="date" class="form-control" id="date_of_quiz" name="date_of_quiz" value="{{ quiz.date_of_quiz }}" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="time_duration">Duration (Minutes)</label>
+                <input type="number" class="form-control" id="time_duration" name="time_duration" value="{{ quiz.time_duration }}" min="1" required>
+                <small class="form-text text-muted">Enter the duration in minutes (e.g., 60 for 1 hour).</small>
+            </div>
+            <div class="form-group mb-3">
+                <label for="remarks">Remarks</label>
+                <textarea class="form-control" id="remarks" name="remarks" rows="3">{{ quiz.remarks }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

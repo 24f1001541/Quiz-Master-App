@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questions for Quiz {{ quiz.id }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Questions for Quiz {{ quiz.id }}</h1>
+
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        
+        <a href="{{ url_for('main.admin_create_question', quiz_id=quiz.id) }}" class="btn btn-primary mb-3">Create New Question</a>
+
+       
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Question</th>
+                    <th>Correct Option</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for question in questions %}
+                <tr>
+                    <td>{{ question.id }}</td>
+                    <td>{{ question.question_statement }}</td>
+                    <td>{{ question.correct_option }}</td>
+                    <td>
+                        <a href="{{ url_for('main.admin_edit_question', question_id=question.id) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{ url_for('main.admin_delete_question', question_id=question.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        
+        <a href="{{ url_for('main.admin_quizzes', chapter_id=quiz.chapter_id) }}" class="btn btn-secondary">Back to Quizzes</a>
+        
+    </div>
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
